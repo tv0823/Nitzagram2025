@@ -1,5 +1,6 @@
 import pygame
 
+from classes.Comment import Comment
 from constants import *
 from helpers import screen
 
@@ -8,30 +9,50 @@ class Post:
     """
     A class used to represent post on Nitzagram
     """
-    def __init__(self,username,location,description,like_counter,comments):
+    def _init_(self,username,location,description):
         self.username = username
         self.location = location
         self.description = description
-        self.like_counter = like_counter
-        self.comments = comments
-        pass
+        self.like_counter = 0
+        self.comments = []
+        self.comments_display_index = 0
+
+
+    def display_username(self,font):
+        user_name = font.render(self.username, True, LIGHT_GRAY)
+        screen.blit(user_name, (USER_NAME_X_POS, USER_NAME_Y_POS))
+
+    def display_location(self,font):
+        location = font.render(self.location, True, LIGHT_GRAY)
+        screen.blit(location, (LOCATION_TEXT_X_POS, LOCATION_TEXT_Y_POS))
+
+    def display_like_counter(self,font):
+        like_counter = font.render(str(self.like_counter), True, LIGHT_GRAY)
+        screen.blit(like_counter, (LIKE_TEXT_X_POS, LIKE_TEXT_Y_POS))
+
+    def display_description(self,font):
+        description = font.render(self.description, True, LIGHT_GRAY)
+        screen.blit(description, (DESCRIPTION_TEXT_X_POS, DESCRIPTION_TEXT_Y_POS))
+
 
     def display(self):
-        """
-        Display the Post image/Text, description, location, likes and comments
-        on screen
+        font = pygame.font.SysFont("chalkduster.ttf", UI_FONT_SIZE)
 
-        :return: None
-        """
-        # TODO: write me!
-        pass
+        self.display_username(font)
+        self.display_location(font)
+        self.display_like_counter(font)
+        self.display_description(font)
+
+        self.display_comments()
+
 
     def add_like(self):
         self.like_counter += 1
 
-    def add_comment(self):
-        #create class comment
-        pass
+    def add_comment(self,text):
+        comm = Comment(text)
+        self.comments.append(comm)
+
     def display_comments(self):
         """
         Display comments on post. In case there are more than 4
@@ -57,6 +78,3 @@ class Post:
             position_index += 1
             if i >= NUM_OF_COMMENTS_TO_DISPLAY - 1:
                 break
-
-
-
