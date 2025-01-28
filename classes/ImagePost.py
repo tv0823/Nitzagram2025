@@ -1,9 +1,9 @@
 import pygame.image
+from classes.Post import *
 
-from Post import *
 class ImagePost(Post):
-    def __init__(self, username, location, description, likes_counter, comments, image):
-        super().__init__(username, location, description, likes_counter, comments)
+    def __init__(self, username, location, description, image):
+        super().__init__(username, location, description)
         self.image = image
 
     def display(self):

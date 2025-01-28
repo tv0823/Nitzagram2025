@@ -1,5 +1,4 @@
 import pygame
-
 from classes.Comment import Comment
 from constants import *
 from helpers import screen
@@ -9,7 +8,7 @@ class Post:
     """
     A class used to represent post on Nitzagram
     """
-    def _init_(self,username,location,description):
+    def __init__(self,username,location,description):
         self.username = username
         self.location = location
         self.description = description
@@ -19,15 +18,15 @@ class Post:
 
 
     def display_username(self,font):
-        user_name = font.render(self.username, True, LIGHT_GRAY)
+        user_name = font.render(self.username, True, BLACK)
         screen.blit(user_name, (USER_NAME_X_POS, USER_NAME_Y_POS))
 
     def display_location(self,font):
-        location = font.render(self.location, True, LIGHT_GRAY)
+        location = font.render(self.location, True, BLACK)
         screen.blit(location, (LOCATION_TEXT_X_POS, LOCATION_TEXT_Y_POS))
 
     def display_like_counter(self,font):
-        like_counter = font.render(str(self.like_counter), True, LIGHT_GRAY)
+        like_counter = font.render(str(self.like_counter), True, BLACK)
         screen.blit(like_counter, (LIKE_TEXT_X_POS, LIKE_TEXT_Y_POS))
 
     def display_description(self,font):
@@ -52,6 +51,11 @@ class Post:
     def add_comment(self,text):
         comm = Comment(text)
         self.comments.append(comm)
+
+    def view_more_comments(self):
+        self.comments_display_index += 1
+        if self.comments_display_index >= len(self.comments):
+            self.comments_display_index = 0
 
     def display_comments(self):
         """

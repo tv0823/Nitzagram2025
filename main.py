@@ -1,6 +1,7 @@
-import pygame
-from helpers import screen
-from constants import WINDOW_WIDTH, WINDOW_HEIGHT, BLACK
+from helpers import *
+from classes.ImagePost import ImagePost
+from classes.TextPost import TextPost
+from buttons import *
 
 
 def main():
@@ -17,7 +18,16 @@ def main():
     background = pygame.transform.scale(background,
                                         (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-    # TODO: add a post here
+    noa_kerel_post = ImagePost("Noa Kirel", "Israel", "Pouch yeah", "Images/noa_kirel.jpg")
+    ronaldo_post = ImagePost("Ronaldo", "Portugal", "Suiii", "Images/ronaldo.jpg")
+    hello_post = TextPost("User123", "unknown", "secret", "hello", WHITE, BLACK)
+    fast_load_post = ImagePost("The Rizzler", "Mars", "#real", "Images/fast_load.jpg")
+    flipped_camera_post = ImagePost("IlovePizza123", "Oven", "#Cypher camera", "Images/flipped_camera.jpg")
+    my_name_is_post = ImagePost("Sage", "Valorant", "#Jett revive me Jett", "Images/my_name_is.jpg")
+
+
+
+    picturesArr = [noa_kerel_post, ronaldo_post, hello_post, fast_load_post, flipped_camera_post, my_name_is_post]
 
     running = True
     while running:
@@ -26,10 +36,23 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if(mouse_in_button(like_button, pos)):
+                    picturesArr[0].add_like()
+                elif(mouse_in_button(comment_button, pos)):
+                    picturesArr[0].add_comment(read_comment_from_user())
+                elif(mouse_in_button(click_post_button, pos)):
+                    picturesArr = rotate_pictures(picturesArr)
+                elif(mouse_in_button(view_more_comments_button, pos)):
+                    picturesArr[0].view_more_comments()
+
 
         # Display the background, presented Image, likes, comments, tags and location(on the Image)
         screen.fill(BLACK)
         screen.blit(background, (0, 0))
+
+        picturesArr[0].display()
 
         # Update display - without input update everything
         pygame.display.update()
@@ -39,5 +62,12 @@ def main():
     pygame.quit()
     quit()
 
+
+def rotate_pictures(picturesArr):
+    temp_picture = picturesArr[-1]
+    for index_picture in range(len(picturesArr) - 1, 0, -1):
+        picturesArr[index_picture] = picturesArr[index_picture - 1]
+    picturesArr[0] = temp_picture
+    return picturesArr
 
 main()
