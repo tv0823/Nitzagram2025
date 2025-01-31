@@ -3,6 +3,7 @@ from classes.ImagePost import ImagePost
 from classes.TextPost import TextPost
 from buttons import *
 
+CENSORARR = ["idan", "flick", "damn", "flip"]
 
 def main():
     # Set up the game display, clock and headline
@@ -25,8 +26,6 @@ def main():
     flipped_camera_post = ImagePost("IlovePizza123", "Oven", "#Cypher camera", "Images/flipped_camera.jpg")
     my_name_is_post = ImagePost("Sage", "Valorant", "#Jett revive me Jett", "Images/my_name_is.jpg")
 
-
-
     picturesArr = [noa_kerel_post, ronaldo_post, hello_post, fast_load_post, flipped_camera_post, my_name_is_post]
 
     running = True
@@ -41,7 +40,9 @@ def main():
                 if(mouse_in_button(like_button, pos)):
                     picturesArr[0].add_like()
                 elif(mouse_in_button(comment_button, pos)):
-                    picturesArr[0].add_comment(read_comment_from_user())
+                    comm = read_comment_from_user()
+                    comm = censor(comm, CENSORARR)
+                    picturesArr[0].add_comment(comm)
                 elif(mouse_in_button(click_post_button, pos)):
                     picturesArr = rotate_pictures(picturesArr)
                 elif(mouse_in_button(view_more_comments_button, pos)):
@@ -69,5 +70,11 @@ def rotate_pictures(picturesArr):
         picturesArr[index_picture] = picturesArr[index_picture - 1]
     picturesArr[0] = temp_picture
     return picturesArr
+
+def censor(comm, censorArr):
+    for censorStr in censorArr:
+        if(censorStr in comm):
+            comm = comm.replace(censorStr, len(censorStr) * '*')
+    return comm
 
 main()
