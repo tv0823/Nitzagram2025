@@ -1,3 +1,4 @@
+from classes.Filter import *
 from helpers import *
 from classes.ImagePost import ImagePost
 from classes.TextPost import TextPost
@@ -19,14 +20,17 @@ def main():
     background = pygame.transform.scale(background,
                                         (WINDOW_WIDTH, WINDOW_HEIGHT))
 
+    purple_filter = Filter((30, 12, 121), 80)
+
     noa_kerel_post = ImagePost("Noa Kirel", "Israel", "Pouch yeah", "Images/noa_kirel.jpg")
     ronaldo_post = ImagePost("Ronaldo", "Portugal", "Suiii", "Images/ronaldo.jpg")
     hello_post = TextPost("User123", "unknown", "secret", "hello", WHITE, BLACK)
     fast_load_post = ImagePost("The Rizzler", "Mars", "#real", "Images/fast_load.jpg")
     flipped_camera_post = ImagePost("IlovePizza123", "Oven", "#Cypher camera", "Images/flipped_camera.jpg")
-    my_name_is_post = ImagePost("Sage", "Valorant", "#Jett revive me Jett", "Images/my_name_is.jpg")
+    my_name_is_post = ImagePost("Sage", "Valorant", "#Jett revive me Jett", "Images/my_name_is.jpg", purple_filter)
 
     picturesArr = [noa_kerel_post, ronaldo_post, hello_post, fast_load_post, flipped_camera_post, my_name_is_post]
+
 
     running = True
     while running:
