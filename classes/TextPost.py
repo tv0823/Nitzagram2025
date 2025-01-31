@@ -1,3 +1,5 @@
+import pywhatkit
+
 from classes.Post import *
 from helpers import from_text_to_array, center_text
 
@@ -23,3 +25,6 @@ class TextPost(Post):
             row_num += 1
 
         super().display()
+
+    def share(self, phnum):
+        pywhatkit.sendwhatmsg_instantly(phnum, f"Text in post: {self.text}\nDescription: {self.description}\nLikes: {self.like_counter}\nLast comment: {self.comments[len(self.comments)-1]}", wait_time=32)

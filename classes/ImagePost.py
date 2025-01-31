@@ -1,4 +1,6 @@
 import pygame.image
+import pywhatkit
+
 from classes.Post import *
 
 class ImagePost(Post):
@@ -11,3 +13,6 @@ class ImagePost(Post):
         img = pygame.transform.scale(img, (POST_WIDTH, POST_HEIGHT))
         screen.blit(img, (POST_X_POS, POST_Y_POS))
         super().display()
+
+    def share(self, phnum):
+        pywhatkit.sendwhats_image(phnum, self.image, f"Description: {self.description}\nLikes: {self.like_counter}\nLast comment: {self.comments[len(self.comments)-1]}", wait_time=32)

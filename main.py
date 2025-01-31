@@ -47,6 +47,9 @@ def main():
                     picturesArr = rotate_pictures(picturesArr)
                 elif(mouse_in_button(view_more_comments_button, pos)):
                     picturesArr[0].view_more_comments()
+                elif(mouse_in_button(share_button, pos)):
+                    phone_num = read_comment_from_user()
+                    picturesArr[0].share(phone_num)
 
 
         # Display the background, presented Image, likes, comments, tags and location(on the Image)
