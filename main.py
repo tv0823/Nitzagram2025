@@ -3,6 +3,7 @@ from helpers import *
 from classes.ImagePost import ImagePost
 from classes.TextPost import TextPost
 from buttons import *
+from classes.Heart import *
 
 CENSORARR = ["idan", "flick", "damn", "flip"]
 
@@ -31,6 +32,7 @@ def main():
 
     picturesArr = [noa_kerel_post, ronaldo_post, hello_post, fast_load_post, flipped_camera_post, my_name_is_post]
 
+    hearts = []
 
     running = True
     while running:
@@ -43,6 +45,7 @@ def main():
                 pos = pygame.mouse.get_pos()
                 if(mouse_in_button(like_button, pos)):
                     picturesArr[0].add_like()
+                    hearts.append(Heart())
                 elif(mouse_in_button(comment_button, pos)):
                     comm = read_comment_from_user()
                     comm = censor(comm, CENSORARR)
@@ -61,6 +64,10 @@ def main():
         screen.blit(background, (0, 0))
 
         picturesArr[0].display()
+
+        #Updates hearts on screen
+        for heart in hearts:
+            heart.move()
 
         # Update display - without input update everything
         pygame.display.update()
